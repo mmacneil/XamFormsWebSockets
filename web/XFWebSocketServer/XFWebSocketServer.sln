@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{250D9E1A-700F-4BB8-ACF3-01D39AEAC24D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B63E4899-8FED-4423-AF6E-8E453805AFD2}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "XFWebSocketServer", "src\XFWebSocketServer\XFWebSocketServer.xproj", "{1E5FB62D-97E1-4D61-A5CD-33DBC2A33FE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E5FB62D-97E1-4D61-A5CD-33DBC2A33FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E5FB62D-97E1-4D61-A5CD-33DBC2A33FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E5FB62D-97E1-4D61-A5CD-33DBC2A33FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E5FB62D-97E1-4D61-A5CD-33DBC2A33FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1E5FB62D-97E1-4D61-A5CD-33DBC2A33FE3} = {250D9E1A-700F-4BB8-ACF3-01D39AEAC24D}
+	EndGlobalSection
+EndGlobal
