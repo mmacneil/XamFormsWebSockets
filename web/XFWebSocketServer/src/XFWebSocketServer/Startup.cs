@@ -49,6 +49,9 @@ namespace XFWebSocketServer
 
             app.UseStaticFiles();
 
+            app.UseWebSockets();
+            app.UseWebSocketHandler();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

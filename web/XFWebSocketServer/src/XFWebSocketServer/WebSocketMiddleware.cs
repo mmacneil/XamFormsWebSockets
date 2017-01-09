@@ -44,8 +44,6 @@ namespace XFWebSocketServer
                             incoming = incoming.Replace("\0", "");
 
                             var data = Encoding.UTF8.GetBytes("Echo from server :" + incoming);
-
-                            //var data = Encoding.UTF8.GetBytes("Echo from server :" + request);
                             buffer = new ArraySegment<byte>(data);
                             await socket.SendAsync(buffer, WebSocketMessageType.Text, true, token);
                             break;
