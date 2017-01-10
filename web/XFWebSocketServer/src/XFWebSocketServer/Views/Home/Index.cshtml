@@ -11,8 +11,16 @@
                 <label for="message">Message:</label>
                 <textarea id="message" class="form-control" rows="3"></textarea>
             </div>
-            <button class="btn btn-default">Send</button>
+            <button id="sendMessage" class="btn btn-default">Send</button>
         </form>
+        
+        <div style="margin-top: 15px;">
+            <h4>Status:</h4>
+            <div style="background: #f0f0f0; border: solid 1px #999;padding:6px" id="status"></div>
+            <h4>Data:</h4>
+            <div style="background: #f0f0f0; border: solid 1px #999;padding:6px" id="data"></div>
+        </div>
+    
     </div>
     <div class="col-md-6">
 
@@ -27,27 +35,29 @@
         $().ready(function () {
             webSocket = new WebSocket("ws://localhost:53273/");
             webSocket.onopen = function () {
-                $("#spanStatus").text("connected");
+                $("#status").text("connected");
             };
             webSocket.onmessage = function (evt) {
-                $("#spanStatus").text(evt.data);
+                $("#data").append("<p>" + evt.data + "</p>");
             };
             webSocket.onerror = function (evt) {
                 alert(evt.message);
             };
             webSocket.onclose = function () {
-                $("#spanStatus").text("disconnected");
+                $("#status").text("disconnected");
             };
-            $("#btnSend").click(function () {
+            $("#sendMessage").click(function () {
                 if (webSocket.readyState == WebSocket.OPEN) {
-                    webSocket.send($("#textInput").val());
+                    webSocket.send($("#message").val());
                 }
                 else {
-                    $("#spanStatus").text("Connection is closed");
+                    $("status").text("Connection is closed");
                 }
             });
+
+            $("form").submit(function (e) {
+                e.preventDefault(e);
+            });
         });
-
     </script>
-
 }

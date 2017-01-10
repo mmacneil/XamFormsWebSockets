@@ -1,6 +1,8 @@
 ﻿
 
 using System;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -13,7 +15,8 @@ namespace XFWebSocketServer
     public class WebSocketMiddleware
     {
         private readonly RequestDelegate _next;
-        
+        private static readonly ConcurrentBag<WebSocket> WebSockets = new ConcurrentBag<WebSocket>();
+
         public WebSocketMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -24,7 +27,9 @@ namespace XFWebSocketServer
             if (httpContext.WebSockets.IsWebSocketRequest)
             {
                 var socket = await httpContext.WebSockets.AcceptWebSocketAsync();
-                
+
+                WebSockets.Add(socket);
+
                 while (socket.State == WebSocketState.Open)
                 {
                     var token = CancellationToken.None;
@@ -39,14 +44,15 @@ namespace XFWebSocketServer
 
                         case WebSocketMessageType.Text:
                             var incoming = Encoding.UTF8.GetString(buffer.Array, buffer.Offset, buffer.Count);
-
                             // get rid of trailing crap from buffer
                             incoming = incoming.Replace("\0", "");
-
-                            var data = Encoding.UTF8.GetBytes("Echo from server :" + incoming);
+                            var data = Encoding.UTF8.GetBytes("data from server :" + DateTime.Now.ToLocalTime() + " " + incoming);
                             buffer = new ArraySegment<byte>(data);
-                            await socket.SendAsync(buffer, WebSocketMessageType.Text, true, token);
-                            break;
+
+                            // send to all open sockets
+                            await Task.WhenAll(WebSockets.Where(s => s.State == WebSocketState.Open)
+                           .Select(s => s.SendAsync(buffer, WebSocketMessageType.Text, true, token)));
+                           break;
                     }
                 }
             }
