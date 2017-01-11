@@ -56,10 +56,9 @@ namespace XamFormsWebSockets
         private void Connection_OnMessage(string obj)
         {
             _echo = true;
-            var item = new Label {Text = obj};
             Device.BeginInvokeOnMainThread(() =>
             {
-                ReceivedData.Children.Add(item);
+                ReceivedData.Children.Add(new Label { Text = obj });
             });
         }
 

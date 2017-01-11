@@ -49,6 +49,8 @@
             $("#sendMessage").click(function () {
                 if (webSocket.readyState == WebSocket.OPEN) {
                     webSocket.send($("#message").val());
+                    $("#message").val("");
+                    $("#message").focus();
                 }
                 else {
                     $("status").text("Connection is closed");
